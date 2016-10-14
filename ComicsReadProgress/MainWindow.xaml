@@ -3,10 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        FontSize="16"
         xmlns:local="clr-namespace:ComicsReadProgress"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
+        Title="Комиксы" SizeToContent="Height" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel Name="Comic" Margin="10">
+        <StackPanel.DataContext>
+            <local:Issue/>
+        </StackPanel.DataContext>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" >
+            <Image Name="ReadLabel" Source="check.png" Height="30" Margin="0,0,5,0"></Image>
+            <TextBlock FontSize="20" Text="{Binding}"></TextBlock>
+        </StackPanel>
         
-    </Grid>
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <Image Height="300" Width="200" Name="Cover" MouseUp="CoverMouseUp" Cursor="Hand"></Image>
+            <StackPanel Margin="10,0,0,0">
+                <TextBlock Text="{Binding Path=Released, StringFormat='dd.MM.yyyy'}"></TextBlock>
+                <Button Width="150" Margin="0,5,0,0" Click="NextClick">Вперед</Button>
+                <Button Width="150" Margin="0,5,0,0" Click="PreviousClick">Назад</Button>
+                <Button Margin="0,5,0,0" Click="ReadIssueClick">Прочитано</Button>
+                <Button Margin="0,5,0,0" Click="SeriesClick">Вся серия</Button>
+            </StackPanel>
+        </StackPanel>
+        <Button Margin="0,15,0,0" Click="ManagementClick">Управление</Button>
+    </StackPanel>
 </Window>
