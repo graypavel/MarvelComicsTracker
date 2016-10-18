@@ -1,18 +1,75 @@
-﻿<Window x:Class="ComicsReadProgress.Management"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ComicsReadProgress"
+        xmlns:code="clr-namespace:ComicsReadProgress.code"
+        x:Class="ComicsReadProgress.views.Management"
         FontSize="16"
         mc:Ignorable="d"
-        Title="Management" Height="600" Width="600">
+        Title="Управление базой комиксов" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
     <StackPanel Orientation="Horizontal" Margin="10">
-        <ListBox ItemsSource="{Binding}" Name="ComicsList" Width="300"></ListBox>
-        <StackPanel Margin="5,0,0,0">
-            <TextBox Name="Year">2014</TextBox>
-            <TextBox Name="Week">22</TextBox>
-            <Button Click="LoadComicsClick">Загрузить комиксы</Button>
-        </StackPanel>
+        <DockPanel Width="350">
+            <Grid Margin="0,5,0,0" DockPanel.Dock="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"><Run Text="Год:"/></TextBlock>
+                <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0"><Run Text="Неделя:"/></TextBlock>
+                <TextBox x:Name="Year" Grid.Row="0" Grid.Column="1" Text="2014"/>
+                <TextBox Margin="0,5,0,0" x:Name="Week" Grid.Row="1" Grid.Column="1" Text="22"/>
+                <Button Margin="0,5,0,0" Click="LoadComicsClick" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Content="Загрузить за дату"/>
+            </Grid>
+            <ListBox ItemsSource="{Binding}" x:Name="ComicsList" FontSize="14" SelectionChanged="ComicsList_SelectionChanged"/>
+
+        </DockPanel>
+
+        <DockPanel x:Name="IssuePanel" Margin="10,0,0,0">
+            <DockPanel.DataContext>
+                <code:Issue/>
+            </DockPanel.DataContext>
+            <TextBlock FontSize="22" DockPanel.Dock="Top" Text="{Binding}" Margin="0,0,0,10"/>
+            <Image DockPanel.Dock="Left" VerticalAlignment="Top" Width="200" Height="300" x:Name="Cover"/>
+            <Grid Height="200" VerticalAlignment="Top" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0"><Run Text="Серия:"/></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0"><Run Text="Том:"/></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0"><Run Text="Номер:"/></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="0"><Run Text="Дата:"/></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="0"><Run Text="Прочитано:"/></TextBlock>
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SeriesTitle}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Volume}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Number}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Released, StringFormat=dd.MM.yyyy}"/>
+                <CheckBox Grid.Row="4" Grid.Column="1" IsChecked="{Binding Read}" />
+
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Удалить" Width="200" HorizontalAlignment="Left" Click="DeleteIssueClick"/>
+
+            </Grid>
+
+        </DockPanel>
+
+
+
     </StackPanel>
 </Window>

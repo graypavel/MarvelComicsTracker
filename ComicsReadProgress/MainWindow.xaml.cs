@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media.Imaging;
+using ComicsReadProgress.code;
 using ComicsReadProgress.views;
 
 namespace ComicsReadProgress
@@ -16,41 +16,31 @@ namespace ComicsReadProgress
         public MainWindow()
         {
             InitializeComponent();
+            AppDomain.CurrentDomain.SetData("DataDirectory", Environment.CurrentDirectory);
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Context>());
-            LoadIssues();
+            try
+            {
+                LoadIssues();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Ошибка загрузки базы данных", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void LoadIssues()
         {
             issues = Repository.Select<Issue>().OrderBy(i => i.Released).ThenBy(i => i.SeriesTitle).ToList();
             if (issues.Count > 0)
-                DisplayIssue(issues.First());
+                DisplayIssue(issues.First(i => !i.Read));
         }
 
         private void DisplayIssue(Issue issue)
         {
             Comic.DataContext = issue;
             selectedIssue = issue;
-            Cover.Source = LoadImage(issue.Cover);
+            Cover.Source = Utils.LoadImage(issue.Cover);
             ReadLabel.Visibility = issue.Read ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private static BitmapImage LoadImage(byte[] imageData)
-        {
-            if (imageData == null || imageData.Length == 0) return null;
-            var image = new BitmapImage();
-            using (var mem = new MemoryStream(imageData))
-            {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
-            }
-            image.Freeze();
-            return image;
         }
 
         private void ReadIssueClick(object sender, RoutedEventArgs e)
@@ -98,6 +88,7 @@ namespace ComicsReadProgress
         private void ManagementClick(object sender, RoutedEventArgs e)
         {
             new Management().ShowDialog();
+            LoadIssues();
         }
 
         private void SeriesClick(object sender, RoutedEventArgs e)

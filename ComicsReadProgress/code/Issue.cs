@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ComicsReadProgress
+namespace ComicsReadProgress.code
 {
     public class Issue
     {
@@ -15,7 +15,9 @@ namespace ComicsReadProgress
 
         public override string ToString()
         {
-            return SeriesTitle + " Vol. " + Volume + " " + Number;
+            if (string.IsNullOrEmpty(SeriesTitle))
+                return "";
+            return SeriesTitle + " Vol. " + Volume + " #" + Number;
         }
     }
 }

@@ -4,13 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         FontSize="16"
-        xmlns:local="clr-namespace:ComicsReadProgress"
+        xmlns:code="clr-namespace:ComicsReadProgress.code"
         mc:Ignorable="d"
         Title="Комиксы" SizeToContent="Height" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <StackPanel Name="Comic" Margin="10">
-        <StackPanel.DataContext>
-            <local:Issue/>
-        </StackPanel.DataContext>
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" >
             <Image Name="ReadLabel" Source="check.png" Height="30" Margin="0,0,5,0"></Image>
             <TextBlock FontSize="20" Text="{Binding}"></TextBlock>

@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Linq;
 
-namespace ComicsReadProgress
+namespace ComicsReadProgress.code
 {
     public static class Repository
     {

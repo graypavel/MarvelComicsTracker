@@ -68,10 +68,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="code\Utils.cs" />
     <Compile Include="views\Management.xaml.cs">
       <DependentUpon>Management.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Repository.cs" />
+    <Compile Include="code\Repository.cs" />
     <Compile Include="views\Series.xaml.cs">
       <DependentUpon>Series.xaml</DependentUpon>
     </Compile>
@@ -83,8 +84,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Context.cs" />
-    <Compile Include="Issue.cs" />
+    <Compile Include="code\Context.cs" />
+    <Compile Include="code\Issue.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -99,7 +100,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MarvelWikiaParser.cs" />
+    <Compile Include="code\MarvelWikiaParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

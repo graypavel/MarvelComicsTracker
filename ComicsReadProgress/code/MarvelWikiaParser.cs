@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 
-namespace ComicsReadProgress
+namespace ComicsReadProgress.code
 {
-    class MarvelWikiaParser
+    public class MarvelWikiaParser
     {
-        public List<Issue> GetIssues(string address)
+        public static IEnumerable<Issue> GetIssues(string address)
         {
             var issues = new List<Issue>();
             var website = new HtmlWeb();
@@ -42,7 +39,7 @@ namespace ComicsReadProgress
             return issues;
         }
 
-        public static byte[] GetIssueCoverUri(string coverHtml)
+        private static byte[] GetIssueCoverUri(string coverHtml)
         {
             var website = new HtmlWeb();
             var document = website.Load(coverHtml);
