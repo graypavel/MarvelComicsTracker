@@ -76,6 +76,9 @@
     <Compile Include="views\Series.xaml.cs">
       <DependentUpon>Series.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\WeekLoader.xaml.cs">
+      <DependentUpon>WeekLoader.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -95,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\Series.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\WeekLoader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
