@@ -5,12 +5,19 @@ using HtmlAgilityPack;
 
 namespace ComicsReadProgress.code
 {
-    public class MarvelWikiaParser
+    public static class MarvelWikiaParser
     {
-        public static IEnumerable<Issue> GetIssues(string address)
+        private const string WebAddress = "http://marvel.wikia.com/wiki/Category:Week_{W},_{Y}";
+
+        public static IEnumerable<Issue> GetIssues(int week, int year)
         {
             var issues = new List<Issue>();
             var website = new HtmlWeb();
+
+            var address = WebAddress
+                .Replace("{W}", week.ToString("00"))
+                .Replace("{Y}", year.ToString("0000"));
+
             var document = website.Load(address);
 
             var element = document.GetElementbyId("gallery-0");
@@ -32,14 +39,14 @@ namespace ComicsReadProgress.code
                 issue.SeriesTitle = items[0];
                 issue.Volume = int.Parse(items[1].Split(' ')[0]);
                 issue.Number = items[1].Split(' ')[1];
-                issue.Cover = GetIssueCoverUri("http://marvel.wikia.com" + galleryItem.ChildNodes[0].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", ""));
+                issue.Cover = GetIssueCover("http://marvel.wikia.com" + galleryItem.ChildNodes[0].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", ""));
                 issue.WikiaAddress = "http://marvel.wikia.com" + galleryItem.ChildNodes[1].ChildNodes[0].ChildNodes[0].GetAttributeValue("href", "");
                 issues.Add(issue);
             }
             return issues;
         }
 
-        private static byte[] GetIssueCoverUri(string coverHtml)
+        private static byte[] GetIssueCover(string coverHtml)
         {
             var website = new HtmlWeb();
             var document = website.Load(coverHtml);

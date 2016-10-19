@@ -27,6 +27,10 @@
                 <TextBox Margin="0,5,0,0" x:Name="Week" Grid.Row="1" Grid.Column="1" Text="22"/>
                 <Button Margin="0,5,0,0" Click="LoadComicsClick" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Content="Загрузить за дату"/>
             </Grid>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                <TextBlock FontWeight="Bold" FontSize="14" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByReleaseDate">По дате</TextBlock>
+                <TextBlock Margin="10,0,0,0" FontSize="14" FontWeight="Bold" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByTitle">По алфавиту</TextBlock>
+            </StackPanel>
             <ListBox ItemsSource="{Binding}" x:Name="ComicsList" FontSize="14" SelectionChanged="ComicsList_SelectionChanged"/>
 
         </DockPanel>

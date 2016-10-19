@@ -26,18 +26,14 @@ namespace ComicsReadProgress.views
 
         private void LoadComicsClick(object sender, RoutedEventArgs e)
         {
-            var address = $"http://marvel.wikia.com/wiki/Category:Week_{Week.Text},_{Year.Text}";
             try
             {
-                var issues = MarvelWikiaParser.GetIssues(address).ToArray();
+                var issues = MarvelWikiaParser.GetIssues(int.Parse(Week.Text), int.Parse(Year.Text)).ToArray();
                 var addedIssues = 0;
-                foreach (var issue in issues)
+                foreach (var issue in issues.Where(issue => Repository.Select<Issue>().Count(i => i.WikiaAddress == issue.WikiaAddress) == 0))
                 {
-                    if (Repository.Select<Issue>().Count(i => i.WikiaAddress == issue.WikiaAddress) == 0)
-                    {
-                        Repository.Insert(issue);
-                        addedIssues++;
-                    }
+                    Repository.Insert(issue);
+                    addedIssues++;
                 }
                 MessageBox.Show($"Добавлено {addedIssues} выпусков, пропущено {issues.Length - addedIssues} выпусков", "",
                     MessageBoxButton.OK, MessageBoxImage.Information);
@@ -64,6 +60,20 @@ namespace ComicsReadProgress.views
             var issue = Repository.Select<Issue>().First(i => i.Id == selectedIssue.Id);
             Repository.Delete(issue);
             UpdateView();
+        }
+
+        private void SortByReleaseDate(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            UpdateView();
+        }
+
+        private void SortByTitle(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ComicsList.DataContext = new ObservableCollection<Issue>(
+                Repository.Select<Issue>()
+                    .OrderBy(i => i.SeriesTitle)
+                    .ThenBy(i => i.Released));
+            ComicsList.SelectedIndex = 0;
         }
     }
 }
