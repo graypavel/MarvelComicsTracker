@@ -4,10 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:code="clr-namespace:ComicsReadProgress.code"
+        xmlns:Properties="clr-namespace:ComicsReadProgress.Properties"
         x:Class="ComicsReadProgress.views.Management"
         FontSize="16"
         mc:Ignorable="d"
-        Title="Управление базой комиксов" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+        Title="Управление базой комиксов" Height="600" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Window.DataContext>
+        <Properties:Settings/>
+    </Window.DataContext>
     <StackPanel Orientation="Horizontal" Margin="10">
         <DockPanel Width="370">
             <Grid Margin="0,5,0,0" DockPanel.Dock="Bottom">
@@ -23,13 +27,13 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0"><Run Text="Год:"/></TextBlock>
                 <TextBlock Margin="0,5,0,0" Grid.Row="1" Grid.Column="0"><Run Text="Неделя:"/></TextBlock>
-                <TextBox x:Name="Year" Grid.Row="0" Grid.Column="1" Text="2014"/>
-                <TextBox Margin="0,5,0,0" x:Name="Week" Grid.Row="1" Grid.Column="1" Text="22"/>
+                <TextBox x:Name="Year" Grid.Row="0" Grid.Column="1" Text="{Binding Year}"/>
+                <TextBox Margin="0,5,0,0" x:Name="Week" Grid.Row="1" Grid.Column="1" Text="{Binding Week}"/>
                 <Button Margin="0,5,0,0" Click="LoadComicsClick" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Content="Загрузить за дату"/>
             </Grid>
             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                <TextBlock FontWeight="Bold" FontSize="14" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByReleaseDate">По дате</TextBlock>
-                <TextBlock Margin="10,0,0,0" FontSize="14" FontWeight="Bold" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByTitle">По алфавиту</TextBlock>
+                <TextBlock FontWeight="Bold" FontSize="14" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByReleaseDate"><Run Text="По дате"/></TextBlock>
+                <TextBlock Margin="10,0,0,0" FontSize="14" FontWeight="Bold" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByTitle"><Run Text="По алфавиту"/></TextBlock>
             </StackPanel>
             <ListBox ItemsSource="{Binding}" x:Name="ComicsList" FontSize="14" SelectionChanged="ComicsList_SelectionChanged"/>
 

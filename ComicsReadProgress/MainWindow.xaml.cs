@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using ComicsReadProgress.code;
@@ -55,9 +56,21 @@ namespace ComicsReadProgress
         {
             var index = issues.FindIndex(i => i.Id == selectedIssue.Id);
             if (index + 1 == issues.Count)
-                return;
-            var issue = issues[index + 1];
-            DisplayIssue(issue);
+            {
+                if (
+                    MessageBox.Show("Это последний загруженный комикс. Загрузить комиксы за следующую неделю?", "", MessageBoxButton.YesNo,
+                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    var week = new GregorianCalendar().GetWeekOfYear(selectedIssue.Released, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+                    var parser = new MarvelWikiaParser(week + 1, selectedIssue.Released.Year);
+
+                }
+            }
+            else
+            {
+                var issue = issues[index + 1];
+                DisplayIssue(issue);
+            }
         }
 
         private void MoveToPreviousComic()

@@ -16,6 +16,7 @@ namespace ComicsReadProgress.views
             InitializeComponent();
             LoadFromDatabase();
             ComicsList.DataContext = issues;
+            DataContext = Properties.Settings.Default;
         }
 
         private void LoadFromDatabase()
@@ -42,6 +43,7 @@ namespace ComicsReadProgress.views
                     }
                     MessageBox.Show($"Добавлено {addedIssues} выпусков, пропущено {loader.Issues.Count - addedIssues} выпусков", "",
                         MessageBoxButton.OK, MessageBoxImage.Information);
+                    MoveToNextWeek();
                 }
             }
             catch (Exception ex)
@@ -49,6 +51,17 @@ namespace ComicsReadProgress.views
                 MessageBox.Show(ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             LoadFromDatabase();
+        }
+
+        private static void MoveToNextWeek()
+        {
+            if (Properties.Settings.Default.Week == 53)
+            {
+                Properties.Settings.Default.Year++;
+                Properties.Settings.Default.Week = 1;
+            }
+            else
+                Properties.Settings.Default.Week++;
         }
 
         private void ComicsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -70,13 +83,19 @@ namespace ComicsReadProgress.views
 
         private void SortByReleaseDate(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            issues = new ObservableCollection<Issue>(issues.OrderBy(i => i.Released).ThenBy(i => i.SeriesTitle));
+            issues = new ObservableCollection<Issue>(
+                issues
+                    .OrderBy(i => i.Released)
+                    .ThenBy(i => i.SeriesTitle));
             ComicsList.DataContext = issues;
         }
 
         private void SortByTitle(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            issues = new ObservableCollection<Issue>(issues.OrderBy(i => i.SeriesTitle).ThenBy(i => i.Released));
+            issues = new ObservableCollection<Issue>(
+                issues
+                    .OrderBy(i => i.SeriesTitle)
+                    .ThenBy(i => i.Released));
             ComicsList.DataContext = issues;
         }
     }
