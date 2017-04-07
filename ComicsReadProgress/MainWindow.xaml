@@ -6,7 +6,7 @@
         FontSize="16"
         xmlns:code="clr-namespace:ComicsReadProgress.code"
         mc:Ignorable="d"
-        Title="Комиксы" SizeToContent="Height" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Комиксы" SizeToContent="Height" Width="550" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <StackPanel Name="Comic" Margin="10">
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="30" >

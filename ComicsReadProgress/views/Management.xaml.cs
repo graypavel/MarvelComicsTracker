@@ -98,5 +98,11 @@ namespace ComicsReadProgress.views
                     .ThenBy(i => i.Released));
             ComicsList.DataContext = issues;
         }
+
+        private void CoverMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var issue = IssuePanel.DataContext as Issue;
+            System.Diagnostics.Process.Start(issue.WikiaAddress);
+        }
     }
 }

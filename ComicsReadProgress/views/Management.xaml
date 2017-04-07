@@ -12,8 +12,10 @@
     <Window.DataContext>
         <Properties:Settings/>
     </Window.DataContext>
+  
+ 
     <StackPanel Orientation="Horizontal" Margin="10">
-        <DockPanel Width="370">
+        <DockPanel Width="400">
             <Grid Margin="0,5,0,0" DockPanel.Dock="Bottom">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -35,7 +37,9 @@
                 <TextBlock FontWeight="Bold" FontSize="14" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByReleaseDate"><Run Text="По дате"/></TextBlock>
                 <TextBlock Margin="10,0,0,0" FontSize="14" FontWeight="Bold" TextDecorations="Underline" Foreground="DarkBlue" Cursor="Hand" MouseUp="SortByTitle"><Run Text="По алфавиту"/></TextBlock>
             </StackPanel>
-            <ListBox ItemsSource="{Binding}" x:Name="ComicsList" FontSize="14" SelectionChanged="ComicsList_SelectionChanged"/>
+            <ListBox ItemsSource="{Binding}" x:Name="ComicsList" FontSize="14" SelectionChanged="ComicsList_SelectionChanged">
+            
+            </ListBox>
 
         </DockPanel>
 
@@ -44,7 +48,7 @@
                 <code:Issue/>
             </DockPanel.DataContext>
             <TextBlock FontSize="22" DockPanel.Dock="Top" Text="{Binding}" Margin="0,0,0,10"/>
-            <Image DockPanel.Dock="Left" VerticalAlignment="Top" Width="200" Height="300" x:Name="Cover"/>
+            <Image DockPanel.Dock="Left" VerticalAlignment="Top" Width="200" Height="300" x:Name="Cover" MouseUp="CoverMouseUp" Cursor="Hand"/>
             <Grid Height="200" VerticalAlignment="Top" Margin="10,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
